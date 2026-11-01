@@ -1,4 +1,4 @@
-FROM oven/bun:1.3.12-alpine AS deps
+FROM oven/bun:1.3.14-alpine AS deps
 
 WORKDIR /app
 COPY package.json bun.lock tsconfig.base.json tsconfig.browser.json tsconfig.workspace.json ./
@@ -16,7 +16,10 @@ FROM deps AS build
 COPY apps/dashboard ./apps/dashboard
 RUN bun run --filter @mpad/dashboard build
 
-FROM oven/bun:1.3.12-alpine AS runtime
+FROM oven/bun:1.3.14-alpine AS runtime
+
+# Pull in Alpine security fixes released after the base image was built.
+RUN apk upgrade --no-cache
 
 WORKDIR /app
 ENV NODE_ENV=production

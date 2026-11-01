@@ -1,4 +1,4 @@
-FROM oven/bun:1.3.12-alpine AS production-deps
+FROM oven/bun:1.3.14-alpine AS production-deps
 
 WORKDIR /app
 COPY package.json bun.lock tsconfig.base.json tsconfig.bun.json tsconfig.browser.json tsconfig.lib.json tsconfig.workspace.json ./
@@ -11,7 +11,10 @@ COPY packages/protocol/package.json ./packages/protocol/package.json
 COPY packages/testkit/package.json ./packages/testkit/package.json
 RUN bun install --frozen-lockfile --production --filter @mpad/api
 
-FROM oven/bun:1.3.12-alpine AS runtime
+FROM oven/bun:1.3.14-alpine AS runtime
+
+# Pull in Alpine security fixes released after the base image was built.
+RUN apk upgrade --no-cache
 
 WORKDIR /app
 ENV NODE_ENV=production
