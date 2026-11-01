@@ -23,7 +23,7 @@
         "autoprefixer": "^10.4",
         "clsx": "^2.1",
         "lucide-react": "^0.468",
-        "postcss": "^8.5.10",
+        "postcss": "^8.5.18",
         "react": "^19.1",
         "react-dom": "^19.1",
         "recharts": "^3.6.0",
